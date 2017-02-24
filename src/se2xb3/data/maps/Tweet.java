@@ -14,7 +14,7 @@ public class Tweet {
     public int[] display_text_range;
     public String source;
     public boolean truncated;
-    public int in_reply_to_status_id, in_reply_to_user_id;
+    public long in_reply_to_status_id, in_reply_to_user_id;
     public String in_reply_to_status_id_str, in_reply_to_user_id_str, in_reply_to_screen_name;
     public User user;
     public String geo, coordinates;
@@ -33,14 +33,29 @@ public class Tweet {
     public Tweet(JsonNode n) {
         created_at = n.findValue("created_at").asText();
         id = n.findValue("id").asLong();
+
         id_str = n.findValue("id_str").asText();
         text = n.findValue("text").asText();
-        created_at = n.findValue("created_at").asText();
-        created_at = n.findValue("created_at").asText();
+        in_reply_to_status_id_str = n.findValue("in_reply_to_status_id_str").asText();
+        in_reply_to_user_id_str = n.findValue("in_reply_to_user_id_str").asText();
+        in_reply_to_screen_name = n.findValue("in_reply_to_screen_name").asText();
+        timestamp_ms = n.findValue("timestamp_ms").asText();
+        lang = n.findValue("lang").asText();
+
+        in_reply_to_status_id = n.findValue("in_reply_to_status_id").asLong();
+        in_reply_to_user_id = n.findValue("in_reply_to_user_id").asLong();
+        quoted_status_id = n.findValue("quoted_status_id").asLong();
+
+        retweet_count = n.findValue("retweet_count").asInt();
+        favorite_count = n.findValue("favorite_count").asInt();
 
         user = new User(n.findValue("user"));
         if (n.findValue("quoted_status") != null) {
         quoted_status = new Tweet(n.findValue("quoted_status"));
+        }
+
+        if (n.findValue("place") != null) {
+            //place = new Place(n.findValue("quoted_status"));
         }
     }
 
