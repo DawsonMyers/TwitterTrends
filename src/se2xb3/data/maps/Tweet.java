@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public class Tweet {
     public String created_at;
-    public int id;
+    public long id;
     public String id_str, text;
     public int[] display_text_range;
     public String source;
@@ -32,11 +32,16 @@ public class Tweet {
 
     public Tweet(JsonNode n) {
         created_at = n.findValue("created_at").asText();
-        id = n.findValue("id").asInt();
+        id = n.findValue("id").asLong();
         id_str = n.findValue("id_str").asText();
         text = n.findValue("text").asText();
         created_at = n.findValue("created_at").asText();
         created_at = n.findValue("created_at").asText();
+
+        user = new User(n.findValue("user"));
+        if (n.findValue("quoted_status") != null) {
+        quoted_status = new Tweet(n.findValue("quoted_status"));
+        }
     }
 
 }

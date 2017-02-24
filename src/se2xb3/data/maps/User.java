@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public class User {
 
-    public int id;
+    public long id;
     public String id_str, name, screen_name, location, url, description;
    // public boolean protected
     public boolean verified;
@@ -25,7 +25,8 @@ public class User {
     public User() {}
 
     public User(JsonNode n) {
-        id = n.findValue("id").asInt();
+
+        id = n.findValue("id").asLong();
         followers_count = n.findValue("followers_count").asInt();
         favourites_count = n.findValue("favourites_count").asInt();
         statuses_count = n.findValue("statuses_count").asInt();
@@ -41,10 +42,7 @@ public class User {
         created_at = n.findValue("created_at").asText();
         time_zone = n.findValue("time_zone").asText();
         lang = n.findValue("lang").asText();
-        name = n.findValue("name").asText();
-        name = n.findValue("name").asText();
-        name = n.findValue("name").asText();
-        name = n.findValue("name").asText();
+
     }
 
 }

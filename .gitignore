@@ -25,3 +25,7 @@ html/
 latex/
 *.db
 *.ini
+tweets-2*
+tweets-100k.txt
+*0k.txt
+tweets-a*

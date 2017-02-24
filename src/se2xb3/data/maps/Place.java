@@ -8,7 +8,8 @@ import java.util.HashMap;
  * @since 2/23/2017
  */
 public class Place {
-    public String  type, id, url, place_type, name, full_name, country_code, country;
+    public long id;
+    public String  type, url, place_type, name, full_name, country_code, country;
     public BoundingBox bounding_box;
     public Place() {}
 
