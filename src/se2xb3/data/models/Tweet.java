@@ -1,4 +1,4 @@
-package se2xb3.data.maps;
+package se2xb3.data.models;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -39,12 +39,12 @@ public class Tweet {
         in_reply_to_status_id_str = n.findValue("in_reply_to_status_id_str").asText();
         in_reply_to_user_id_str = n.findValue("in_reply_to_user_id_str").asText();
         in_reply_to_screen_name = n.findValue("in_reply_to_screen_name").asText();
-        timestamp_ms = n.findValue("timestamp_ms").asText();
+//        timestamp_ms = n.findValue("timestamp_ms").asText();
         lang = n.findValue("lang").asText();
 
         in_reply_to_status_id = n.findValue("in_reply_to_status_id").asLong();
         in_reply_to_user_id = n.findValue("in_reply_to_user_id").asLong();
-        quoted_status_id = n.findValue("quoted_status_id").asLong();
+//        quoted_status_id = n.findValue("quoted_status_id").asLong();
 
         retweet_count = n.findValue("retweet_count").asInt();
         favorite_count = n.findValue("favorite_count").asInt();
@@ -59,6 +59,9 @@ public class Tweet {
         }
     }
 
+    public String getText() {
+        return text;
+    }
 }
 
 /*

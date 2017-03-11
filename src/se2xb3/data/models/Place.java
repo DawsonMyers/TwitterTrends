@@ -1,4 +1,4 @@
-package se2xb3.data.maps;
+package se2xb3.data.models;
 
 import java.util.HashMap;
 
