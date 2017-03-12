@@ -1,48 +1,57 @@
 package se2xb3.data.source;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import se2xb3.config.Constants;
-import se2xb3.data.DataProcessor;
-import se2xb3.data.models.Tweet;
+import se2xb3.io.IOController;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * @author Dawson
+ * A class that extends the abstract class DataSource that is used to read
+ * data from a file and stream it into the system as each line is read.
+ * @author Dawson Myers
  * @version 1.0
  * @since 3/10/2017
  */
-public class FileDataSource implements Constants{
-     String       fname        = INPUT_FILE;
-     ObjectMapper objectMapper = new ObjectMapper();
-     List<Tweet> tweets;// = new ArrayList<>();
-    DataProcessor processor;
+public class FileDataSource extends DataSource implements Constants {
 
-    public FileDataSource(DataProcessor dp) {processor = dp;}
-
-    public List<Tweet> readData(){
-       return readDataFromFile(fname);
+    /**
+     * Constructor that takes an IOController instance.
+     *
+     * @param controller
+     */
+    public FileDataSource(IOController controller) {
+        super(controller);
+        setUrl(INPUT_FILE);
     }
-    public List<Tweet> readDataFromFile(String name) {
-        List<Tweet> tweetList = new ArrayList<>();
-        int count = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(name))) {
+
+    /**
+     * This method is called when the thread is started (a hook). It begins the
+     * process of reading data from a data source.
+     */
+    @Override void startSource() {
+        readData();
+    }
+
+
+    /**
+     * Begin reading tweets from a file. Each line of text is one JSON
+     * encoded tweet. The strings are added to the queue as they are read.
+     */
+    public void readData() {
+
+        try (BufferedReader br = new BufferedReader(new FileReader(url))) {
             String line = "";
 
-            while ((line = br.readLine()) != null) {
-                count++;
-                //println(line);
-                JsonNode n     = jsonStringToTree(line);
-                Tweet    tweet = new Tweet(n);
-                tweetList.add(tweet);
-                process(tweet);
+//            int count = 0;
 
+            // read all lines in file and insert them into the queue
+            while ((line = br.readLine()) != null) {
+
+//                queue.enqueue("Msg "+count++);
+                queue.enqueue(line);
             }
 
         } catch (FileNotFoundException e) {
@@ -51,28 +60,6 @@ public class FileDataSource implements Constants{
             e.printStackTrace();
         }
 
-       // println("Count = " + count);
-        return tweetList;
-    }
-
-    private  void process(Tweet tweet) {
-        processor.processTweet(tweet);
-    }
-
-    private JsonNode jsonStringToTree(String jsonStr) {
-
-//        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode node = null;
-
-        try {
-
-            node = objectMapper.readValue(jsonStr, JsonNode.class);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return node;
     }
 
 
