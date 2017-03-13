@@ -1,4 +1,4 @@
-package se2xb3.data.source;
+package se2xb3.data.processing;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,9 +15,22 @@ public class TweetProcessor implements IProcessor<String> {
     ObjectMapper objectMapper = new ObjectMapper();
     public TweetProcessor() {}
 
-    @Override public void process(String tweetStr) {
+    @Override public Object process(String tweetStr) {
         JsonNode n     = jsonStringToTree(tweetStr);
         Tweet    tweet = new Tweet(n);
+        return tweet;
+    }
+
+
+    /**
+     * Deserialize tweet string and return a new Tweet object.
+     * @param tweetStr
+     * @return
+     */
+    public Tweet deserializeTweet(String tweetStr) {
+        JsonNode n     = jsonStringToTree(tweetStr);
+        Tweet    tweet = new Tweet(n);
+        return tweet;
     }
 
     private JsonNode jsonStringToTree(String jsonStr) {
@@ -35,4 +48,6 @@ public class TweetProcessor implements IProcessor<String> {
 
         return node;
     }
+
+
 }

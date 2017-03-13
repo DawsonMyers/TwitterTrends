@@ -3,7 +3,7 @@ package se2xb3.tests;
 import org.junit.Before;
 import org.junit.Test;
 import se2xb3.control.AppController;
-import se2xb3.data.source.FileDataSource;
+import se2xb3.io.source.FileDataSource;
 import se2xb3.io.IOController;
 
 import java.util.concurrent.locks.Condition;

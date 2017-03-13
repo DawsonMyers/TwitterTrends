@@ -1,30 +1,36 @@
 package se2xb3.io;
 
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * A class that asynchronously decouples incoming messages from the rest of the system by
- * running the buffer in separate thread.
+ * running the buffer in separate thread. It continuously tries to take
+ * messages from a blocking queue.
  *
  * @author Dawson Myers
  * @version 1.0
  * @since 3/11/2017
  */
-public class AsyncMessageBuffer<M> extends Thread implements IMessageQueue<M>{
+public class AsyncMessageLooper<M> implements Runnable, IMessageQueue<M>{
 
     private volatile LinkedBlockingQueue<M> blockingQueue = new LinkedBlockingQueue<M>();
     private IMessageReceiver<M> messageReceiver;
-
+    private boolean doShutdown = false;
 
     /**
      * Contructor that takes a message receiver
      *
      * @param receiver
+     * @param executorService
      */
-    public AsyncMessageBuffer(IMessageReceiver<M> receiver) {
-        super("AsyncMessageBuffer Thread");
+    public AsyncMessageLooper(IMessageReceiver<M> receiver, ExecutorService
+            executorService) {
+//        super("AsyncMessageBuffer Thread");
         messageReceiver = receiver;
-        this.start();
+        executorService.execute(this);
+//        this.start();
+//        new Thread().
     }
 
     /**
@@ -42,12 +48,13 @@ public class AsyncMessageBuffer<M> extends Thread implements IMessageQueue<M>{
      * Start message loop thread.
      */
     public void run() {
-        while (true) {
+        while (!doShutdown) {
 
             M msg;
             try {
                 // Loop forever, taking messages from the queue when available.
                 msg =  blockingQueue.take();
+
                 //if(msg instanceof String) System.out.println(msg);
                 messageReceiver.receiveMessage(msg);
             } catch (InterruptedException e) {
@@ -55,6 +62,16 @@ public class AsyncMessageBuffer<M> extends Thread implements IMessageQueue<M>{
             }
 
         }
+    }
+
+
+    /**
+     * Shutdown thhread by breaking out of the message loop.
+     */
+    public void shutdown() {
+        doShutdown = true;
+        blockingQueue.add((M) new Object());
+
     }
 
 }

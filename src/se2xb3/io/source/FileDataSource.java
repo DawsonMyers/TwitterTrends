@@ -1,7 +1,8 @@
-package se2xb3.data.source;
+package se2xb3.io.source;
 
 import se2xb3.config.Constants;
 import se2xb3.io.IOController;
+import se2xb3.tests.TestDataSource;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -53,6 +54,10 @@ public class FileDataSource extends DataSource implements Constants {
 //                queue.enqueue("Msg "+count++);
                 queue.enqueue(line);
             }
+
+            println("Finished reading file");
+
+           if(TestDataSource.testing) TestDataSource.endTest();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

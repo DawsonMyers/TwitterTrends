@@ -1,9 +1,8 @@
 package se2xb3.tests;
 
 import se2xb3.control.AppController;
-import se2xb3.data.source.FileDataSource;
-import se2xb3.io.IOController;
 
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -16,32 +15,41 @@ import java.util.concurrent.locks.ReentrantLock;
 public class TestDataSource {
     private static final Lock      lock        = new ReentrantLock();
     private static final Condition waitForTest = lock.newCondition();
-
+    static volatile boolean isDone = false;
+    public static volatile boolean testing = true;
     public TestDataSource() {}
 
 
     public static void main(String[] args) {
 
-            //new Thread(()-> {
-                IOController   controller = new IOController(AppController.getInstance());
-
-                FileDataSource source     = new FileDataSource(controller);
-                //Thread.currentThread().wait();
-            //}).start();
+        AppController app = AppController.getInstance();
             waitForEver();
-
     }
 
-    static synchronized void waitForEver() {
+    // used to block until test is completed
+    static volatile LinkedBlockingQueue<String> blockingQueue = new
+            LinkedBlockingQueue<>();
+
+    static  void waitForEver() {
         try {
-            lock.lock();
-            while (true)
-                waitForTest.await();
+            blockingQueue.take(); // wait here
+            AppController.shutdownApp();
+//            lock.lock();
+//            while (!isDone)
+//                waitForTest.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            lock.unlock();
+//            lock.unlock();
         }
+    }
+
+
+    public static  void endTest() {
+//        isDone = true;
+//        waitForTest.signal();
+
+        blockingQueue.add("Done");
     }
 
 }

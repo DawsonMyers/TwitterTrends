@@ -12,4 +12,9 @@ public interface IMessageQueue<M> {
      * @param msg
      */
     public void enqueue(M msg);
+
+    /**
+     * Shutdown.
+     */
+    public void shutdown();
 }

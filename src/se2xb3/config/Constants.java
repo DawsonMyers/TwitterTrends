@@ -10,4 +10,6 @@ public interface Constants {
     String INPUT_FILE = "./TwitterDataProcessor/data/tweets-1k.txt";
     boolean LIVESTREAM = false;
     String TWEET_REGEX = "([@|#]*\\w)+";
+
+    boolean TESTING = true;
 }

@@ -1,4 +1,4 @@
-package se2xb3.data.source;
+package se2xb3.data.processing;
 
 /**
  * Classes that implement this interface provide a strategy for processing an
@@ -8,5 +8,5 @@ package se2xb3.data.source;
  * @since 3/11/2017
  */
 public interface IProcessor<T> {
-    void process(T t);
+    Object process(T t);
 }

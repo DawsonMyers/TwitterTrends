@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>se2xb3.control.AppController</OriginalElement>
+  <nodes>
+    <node x="0.0" y="124.0">se2xb3.data.algorithms.GraphStrategy</node>
+    <node x="870.6291666666665" y="644.0">se2xb3.control.AppController</node>
+    <node x="1400.0" y="113.0">se2xb3.io.AsyncMessageBuffer</node>
+    <node x="638.9999999999999" y="102.0">se2xb3.data.source.TweetProcessor</node>
+    <node x="407.4999999999999" y="490.0">se2xb3.data.DataController</node>
+    <node x="1359.0" y="278.0">se2xb3.data.source.DataSource</node>
+    <node x="471.9999999999999" y="124.0">se2xb3.data.algorithms.SearchStrategy</node>
+    <node x="1329.1011574074073" y="490.0">se2xb3.io.IOController</node>
+    <node x="1279.25" y="0.0">se2xb3.io.IMessageReceiver</node>
+    <node x="409.9999999999999" y="289.0">se2xb3.data.DataHandler</node>
+    <node x="1518.5" y="0.0">se2xb3.io.IMessageQueue</node>
+    <node x="870.9999999999999" y="102.0">se2xb3.data.algorithms.WordIndexer</node>
+    <node x="1137.0" y="102.0">se2xb3.io.MessageHandler</node>
+    <node x="166.9999999999999" y="113.0">se2xb3.data.algorithms.SortStrategy</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="se2xb3.data.DataController" target="se2xb3.control.AppController">
+      <point x="55.200000000000045" y="37.0" />
+      <point x="600.6999999999999" y="594.0" />
+      <point x="955.3291666666665" y="594.0" />
+      <point x="-36.299999999999955" y="-48.0" />
+    </edge>
+    <edge source="se2xb3.data.DataHandler" target="se2xb3.data.algorithms.SearchStrategy">
+      <point x="-13.549999999999955" y="-70.0" />
+      <point x="531.9499999999999" y="218.0" />
+      <point x="508.7499999999999" y="218.0" />
+      <point x="-36.75" y="26.0" />
+    </edge>
+    <edge source="se2xb3.data.source.DataSource" target="se2xb3.io.MessageHandler">
+      <point x="-99.19999999999993" y="-81.0" />
+      <point x="1383.8" y="258.0" />
+      <point x="1288.875" y="258.0" />
+      <point x="30.375" y="48.0" />
+    </edge>
+    <edge source="se2xb3.data.DataHandler" target="se2xb3.data.source.TweetProcessor">
+      <point x="40.65000000000009" y="-70.0" />
+      <point x="586.15" y="228.0" />
+      <point x="691.9999999999999" y="228.0" />
+      <point x="-53.0" y="48.0" />
+    </edge>
+    <edge source="se2xb3.data.DataHandler" target="se2xb3.data.algorithms.GraphStrategy">
+      <point x="-94.84999999999991" y="-70.0" />
+      <point x="450.65" y="248.0" />
+      <point x="110.25" y="248.0" />
+      <point x="36.75" y="26.0" />
+    </edge>
+    <edge source="se2xb3.control.AppController" target="se2xb3.data.DataController">
+      <point x="-60.5" y="-48.0" />
+      <point x="931.1291666666665" y="604.0" />
+      <point x="545.4999999999999" y="604.0" />
+      <point x="0.0" y="37.0" />
+    </edge>
+    <edge source="se2xb3.data.source.DataSource" target="se2xb3.io.IMessageQueue">
+      <point x="49.60000000000002" y="-81.0" />
+      <point x="1532.6" y="248.0" />
+      <point x="1610.3333333333333" y="248.0" />
+      <point x="1610.3333333333333" y="82.0" />
+      <point x="1591.5" y="82.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="se2xb3.data.source.DataSource" target="se2xb3.io.IOController">
+      <point x="82.66666666666674" y="81.0" />
+      <point x="1565.6666666666665" y="470.0" />
+      <point x="1442.5011574074072" y="470.0" />
+      <point x="50.39999999999998" y="-37.0" />
+    </edge>
+    <edge source="se2xb3.io.IOController" target="se2xb3.data.source.DataSource">
+      <point x="0.0" y="-37.0" />
+      <point x="1392.1011574074073" y="470.0" />
+      <point x="1400.3333333333333" y="470.0" />
+      <point x="-82.66666666666669" y="81.0" />
+    </edge>
+    <edge source="se2xb3.io.MessageHandler" target="se2xb3.io.IMessageReceiver">
+      <point x="0.0" y="-48.0" />
+      <point x="1258.5" y="82.0" />
+      <point x="1309.75" y="82.0" />
+      <point x="-61.0" y="26.0" />
+    </edge>
+    <edge source="se2xb3.io.MessageHandler" target="se2xb3.io.IOController">
+      <point x="-30.375" y="48.0" />
+      <point x="1228.125" y="258.0" />
+      <point x="1203.25" y="258.0" />
+      <point x="1203.25" y="460.0" />
+      <point x="1366.901157407407" y="460.0" />
+      <point x="-25.200000000000045" y="-37.0" />
+    </edge>
+    <edge source="se2xb3.io.IOController" target="se2xb3.control.AppController">
+      <point x="50.39999999999998" y="37.0" />
+      <point x="1442.5011574074072" y="624.0" />
+      <point x="1100.5291666666665" y="624.0" />
+      <point x="108.89999999999998" y="-48.0" />
+    </edge>
+    <edge source="se2xb3.io.AsyncMessageBuffer" target="se2xb3.io.IMessageReceiver">
+      <point x="-55.33333333333337" y="-37.0" />
+      <point x="1427.6666666666665" y="82.0" />
+      <point x="1370.75" y="82.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="se2xb3.data.DataController" target="se2xb3.data.DataHandler">
+      <point x="-103.5" y="-37.0" />
+      <point x="441.9999999999999" y="470.0" />
+      <point x="443.8749999999999" y="470.0" />
+      <point x="-101.625" y="70.0" />
+    </edge>
+    <edge source="se2xb3.data.DataHandler" target="se2xb3.data.algorithms.SortStrategy">
+      <point x="-40.65000000000009" y="-70.0" />
+      <point x="504.8499999999998" y="228.0" />
+      <point x="380.7499999999999" y="228.0" />
+      <point x="71.25" y="37.0" />
+    </edge>
+    <edge source="se2xb3.data.DataHandler" target="se2xb3.data.algorithms.WordIndexer">
+      <point x="121.95000000000005" y="-70.0" />
+      <point x="667.4499999999999" y="258.0" />
+      <point x="1055.5" y="258.0" />
+      <point x="61.5" y="48.0" />
+    </edge>
+    <edge source="se2xb3.io.AsyncMessageBuffer" target="se2xb3.io.IMessageQueue">
+      <point x="55.33333333333337" y="-37.0" />
+      <point x="1538.3333333333333" y="82.0" />
+      <point x="1542.8333333333333" y="82.0" />
+      <point x="-48.66666666666663" y="26.0" />
+    </edge>
+    <edge source="se2xb3.data.source.DataSource" target="se2xb3.io.AsyncMessageBuffer">
+      <point x="0.0" y="-81.0" />
+      <point x="0.0" y="37.0" />
+    </edge>
+    <edge source="se2xb3.control.AppController" target="se2xb3.control.AppController">
+      <point x="-80.66666666666666" y="48.0" />
+      <point x="910.9624999999999" y="760.0" />
+      <point x="850.6291666666665" y="760.0" />
+      <point x="850.6291666666665" y="724.0" />
+      <point x="-121.0" y="32.0" />
+    </edge>
+    <edge source="se2xb3.data.DataHandler" target="se2xb3.data.DataController">
+      <point x="33.875" y="70.0" />
+      <point x="34.5" y="-37.0" />
+    </edge>
+    <edge source="se2xb3.control.AppController" target="se2xb3.io.IOController">
+      <point x="36.299999999999955" y="-48.0" />
+      <point x="1027.9291666666666" y="594.0" />
+      <point x="1366.9011574074073" y="594.0" />
+      <point x="-25.19999999999999" y="37.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7662821650399291" x="928.9965261695229" y="417.5525613837647" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

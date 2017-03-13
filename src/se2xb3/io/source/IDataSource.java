@@ -1,4 +1,4 @@
-package se2xb3.data.source;
+package se2xb3.io.source;
 
 /**
  * @author Dawson
