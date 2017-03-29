@@ -1,0 +1,152 @@
+group 'xb3'
+version '1.0'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.ratpack:ratpack-gradle:1.4.5"
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+    }
+}
+//plugins {
+//    id 'io.ratpack.ratpack-java' version '1.3.3'
+//}
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'io.ratpack.ratpack-java'
+apply plugin: 'com.github.johnrengelman.shadow'
+//sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.7'
+    compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
+
+    compile ratpack.dependency("guice")
+//    compile ratpack.dependency("jackson")
+    compile "io.ratpack:ratpack-jackson:0.9.17"
+    runtime 'org.slf4j:slf4j-simple:1.7.10'
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'junit', name: 'junit', version: '4.12'
+
+//    classpath 'io.ratpack:ratpack-gradle:1.0.0',
+//            'com.github.jengelman.gradle.plugins:shadow:1.2.1'
+}
+
+mainClassName = "se2xb3.bootstrap.TwitterProcessorApp"
+
+
+//task copyTask(type: Copy) {
+//    from 'src/main/webapp'
+//    into 'build/explodedWar'
+//}
+
+task hello {
+    doLast {
+        println '$build'
+    }
+}
+File[] fileList(String dir) {
+    file(dir).listFiles({file -> file.isFile() } as FileFilter).sort()
+}
+task checksum {
+    doLast {
+        fileList('build/mytest').each { File file ->
+//            ant.checksum(file: file, property: "cs_$file.name")
+            println "$file.name"// Checksum: "//${ant.properties["cs_$file.name"]}"
+        }
+    }
+}
+
+// make dir
+// ant.mkdir(dir: "build/zip")
+
+
+/**
+ * all of these files have to be copied to the assets directory (src/ratpack) before
+ * assembleDist is run. This is so that all of the required assets will be copied into the zip that
+ * assembleDist makes
+ */
+task buildTwitterApp(dependsOn: javadoc) {
+//    javadoc.execute()
+
+    // copy required files to the assets directory (src/ratpack)
+    def dir = 'src/ratpack'
+    def data = new File('src/ratpack/data')
+    def docs = new File('src/ratpack/docs')
+    doLast {
+        copy {
+            // copy javadocs
+            from 'build/docs/javadoc'
+            into docs
+        }
+        copy {
+            // copy web app
+            // this has to be built first using "ng build --prod" in a terminal
+            from '../TwitterTrendsWebApp/TwitterTrends/dist'
+            into dir
+        }
+        copy {
+            // copy tweet data file
+            from 'data/'
+            include 'tweets-10k.txt'
+            into data
+        }
+    }
+
+
+}
+// wait 5 seconds to allow files to finish being moved to the asset dir. This way all of the files
+// will be copied to the zip when assembleDist is run
+buildTwitterApp.doLast {
+    sleep(5 * 1000)
+}
+
+//buildTwitterApp.finalizedBy(assembleDist)
+
+
+task makeDist{
+    dependsOn buildTwitterApp, assembleDist
+    tasks.findByName('assembleDist').mustRunAfter('buildTwitterApp')
+}
+
+    //copyDocs()//.execute()
+
+
+//    from 'build/docs/javadoc'
+//    doLast {
+//        from('build/mytest')
+//        into 'build/mydist'
+//        //println '$build'
+//    }
+
+
+
+
+task cleanAssets(type: Delete) {
+    delete fileTree('src/ratpack/') {
+        include '**/*'
+        exclude '.ratpack'
+    }
+}
+
+task copyDocs(type: Copy) {
+    def docs = new File('src/ratpack/docs')
+    from 'build/docs/javadoc'
+    into docs
+}
+task copyTask(type: Copy) {
+    from 'build/mytest'
+    into 'build/mydist'
+}
+

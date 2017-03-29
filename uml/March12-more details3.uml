@@ -20,10 +20,10 @@
   <notes />
   <edges>
     <edge source="se2xb3.data.DataController" target="se2xb3.control.AppController">
-      <point x="118.39999999999998" y="48.0" />
-      <point x="1200.3166666666666" y="768.0" />
-      <point x="798.3729166666667" y="768.0" />
-      <point x="127.79999999999995" y="-92.0" />
+      <point x="59.200000000000045" y="48.0" />
+      <point x="1141.1166666666668" y="758.0" />
+      <point x="769.9729166666667" y="758.0" />
+      <point x="99.39999999999998" y="-92.0" />
     </edge>
     <edge source="se2xb3.io.IOController" target="se2xb3.io.source.DataSource">
       <point x="-55.33333333333334" y="-59.0" />
@@ -32,32 +32,34 @@
       <point x="-102.66666666666669" y="114.0" />
     </edge>
     <edge source="se2xb3.data.DataHandler" target="se2xb3.data.algorithms.SearchStrategy">
-      <point x="118.5625" y="-70.0" />
-      <point x="1200.4791666666667" y="292.0" />
-      <point x="1386.4166666666665" y="292.0" />
-      <point x="36.75" y="26.0" />
-    </edge>
-    <edge source="se2xb3.data.DataHandler" target="se2xb3.data.algorithms.GraphStrategy">
-      <point x="16.9375" y="-70.0" />
-      <point x="1098.8541666666667" y="262.0" />
-      <point x="1145.9166666666665" y="262.0" />
+      <point x="84.6875" y="-70.0" />
+      <point x="1166.6041666666667" y="282.0" />
+      <point x="1312.9166666666665" y="282.0" />
       <point x="-36.75" y="26.0" />
     </edge>
+    <edge source="se2xb3.data.DataHandler" target="se2xb3.data.algorithms.GraphStrategy">
+      <point x="50.8125" y="-70.0" />
+      <point x="1132.7291666666667" y="272.0" />
+      <point x="1219.4166666666665" y="272.0" />
+      <point x="36.75" y="26.0" />
+    </edge>
     <edge source="se2xb3.control.AppController" target="se2xb3.data.DataController">
-      <point x="71.0" y="-92.0" />
-      <point x="741.5729166666667" y="748.0" />
-      <point x="1081.9166666666667" y="748.0" />
-      <point x="0.0" y="48.0" />
+      <point x="14.199999999999932" y="-92.0" />
+      <point x="684.7729166666667" y="728.0" />
+      <point x="963.5166666666668" y="728.0" />
+      <point x="-118.39999999999998" y="48.0" />
     </edge>
     <edge source="se2xb3.io.source.DataSource" target="se2xb3.io.IOController">
-      <point x="0.0" y="114.0" />
-      <point x="0.0" y="-59.0" />
+      <point x="102.66666666666669" y="114.0" />
+      <point x="379.03208333333333" y="565.0" />
+      <point x="331.69874999999996" y="565.0" />
+      <point x="55.333333333333314" y="-59.0" />
     </edge>
     <edge source="se2xb3.io.MessageHandler" target="se2xb3.io.source.DataSource">
-      <point x="32.875" y="59.0" />
-      <point x="164.375" y="272.0" />
-      <point x="232.36541666666665" y="272.0" />
-      <point x="-44.0" y="-114.0" />
+      <point x="98.625" y="59.0" />
+      <point x="230.125" y="262.0" />
+      <point x="276.36541666666665" y="262.0" />
+      <point x="0.0" y="-114.0" />
     </edge>
     <edge source="se2xb3.io.source.DataSource" target="se2xb3.io.IMessageQueue">
       <point x="88.0" y="-114.0" />
@@ -86,10 +88,10 @@
       <point x="-55.333333333333314" y="37.0" />
     </edge>
     <edge source="se2xb3.io.source.DataSource" target="se2xb3.io.MessageHandler">
-      <point x="-132.0" y="-114.0" />
-      <point x="144.36541666666665" y="292.0" />
-      <point x="32.875" y="292.0" />
-      <point x="-98.625" y="59.0" />
+      <point x="-88.0" y="-114.0" />
+      <point x="188.36541666666665" y="282.0" />
+      <point x="98.625" y="282.0" />
+      <point x="-32.875" y="59.0" />
     </edge>
     <edge source="se2xb3.io.IOController" target="se2xb3.control.AppController">
       <point x="33.19999999999999" y="59.0" />
@@ -97,17 +99,17 @@
       <point x="627.9729166666667" y="738.0" />
       <point x="-42.60000000000002" y="-92.0" />
     </edge>
+    <edge source="se2xb3.data.DataController" target="se2xb3.data.DataHandler">
+      <point x="-111.0" y="-48.0" />
+      <point x="970.9166666666667" y="565.0" />
+      <point x="980.2916666666667" y="565.0" />
+      <point x="-101.625" y="70.0" />
+    </edge>
     <edge source="se2xb3.io.source.DataSource" target="se2xb3.io.AsyncMessageLooper">
       <point x="44.0" y="-114.0" />
       <point x="320.36541666666665" y="272.0" />
       <point x="376.0" y="272.0" />
       <point x="0.0" y="48.0" />
-    </edge>
-    <edge source="se2xb3.data.DataController" target="se2xb3.data.DataHandler">
-      <point x="-37.0" y="-48.0" />
-      <point x="1044.9166666666667" y="565.0" />
-      <point x="1048.0416666666667" y="565.0" />
-      <point x="-33.875" y="70.0" />
     </edge>
     <edge source="se2xb3.data.DataHandler" target="se2xb3.data.algorithms.SortStrategy">
       <point x="-50.8125" y="-70.0" />
@@ -128,23 +130,21 @@
       <point x="488.57291666666674" y="818.6666666666666" />
       <point x="-142.0" y="-61.33333333333334" />
     </edge>
-    <edge source="se2xb3.data.DataHandler" target="se2xb3.data.DataController">
-      <point x="101.625" y="70.0" />
-      <point x="1183.5416666666667" y="565.0" />
-      <point x="1192.9166666666667" y="565.0" />
-      <point x="111.0" y="-48.0" />
-    </edge>
     <edge source="se2xb3.control.AppController" target="se2xb3.io.IOController">
-      <point x="-127.80000000000001" y="-92.0" />
+      <point x="-127.79999999999995" y="-92.0" />
       <point x="542.7729166666668" y="768.0" />
       <point x="209.96541666666667" y="768.0" />
       <point x="-66.4" y="59.0" />
     </edge>
+    <edge source="se2xb3.data.DataHandler" target="se2xb3.data.DataController">
+      <point x="33.875" y="70.0" />
+      <point x="1115.7916666666667" y="565.0" />
+      <point x="1118.9166666666667" y="565.0" />
+      <point x="37.0" y="-48.0" />
+    </edge>
   </edges>
   <settings layout="Hierarchic Group" zoom="0.7037754114230397" x="712.0" y="506.5" />
-  <SelectedNodes>
-    <node>se2xb3.io.source.DataSource</node>
-  </SelectedNodes>
+  <SelectedNodes />
   <Categories>
     <Category>Methods</Category>
   </Categories>
