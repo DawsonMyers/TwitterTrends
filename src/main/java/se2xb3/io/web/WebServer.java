@@ -1,8 +1,11 @@
 package se2xb3.io.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ratpack.handling.Chain;
 import ratpack.server.BaseDir;
 import ratpack.server.RatpackServer;
+import se2xb3.config.Constants;
 import se2xb3.io.IOController;
 import se2xb3.io.web.handlers.CORSHandler;
 import se2xb3.io.web.handlers.TrendHandler;
@@ -15,9 +18,11 @@ import se2xb3.io.web.handlers.TrendHandler;
  * @version 1.0
  * @since 3/26/2017
  */
-public class WebServer implements Runnable {
+public class WebServer implements Runnable, Constants {
+    private static final String _CLASS_NAME = WebServer.class.getSimpleName();
+    private final static Logger log         = LoggerFactory.getLogger(_CLASS_NAME);
     private IOController ioController;
-
+    private long requestCount = 0;
     public WebServer()             {}
     public WebServer(IOController io) {ioController = io;}
 
@@ -105,16 +110,27 @@ public class WebServer implements Runnable {
                               .files(f -> f.dir(""))
                               // apply the CORS handler to all request to allo cross-site REST requests
                               .all(new CORSHandler())
+//                              .all(RequestLogger.ncsa())
+//                              .all(req -> {
+//                                  requestCount++;
+//                                  if (requestCount % 100 == 0) {
+//                                      log.info("Request count = " + requestCount);
+//                                  }
+//                              })
                               // statically serves all files in the dir containing the .ratpack file
                               .prefix("", nested -> nested.fileSystem("", Chain::files))
-                              .path("", ctx -> ctx.render(ctx.file("index.html")))
-                              .path("docs", ctx -> ctx.render(ctx.file("docs/index.html")))
+                              .path("", ctx -> ctx.render(ctx.file(WEB_APP_ROOT_FILE)))
+//                              .path("", ctx -> ctx.render(ctx.file("index.html")))
+//                              .path("", ctx -> ctx.render(ctx.file("index.html")))
+                              .path(JAVADOC_ROOT_PATH, ctx -> ctx.render(ctx.file(JAVADOC_INDEX_FILE)))
+//                              .path("docs", ctx -> ctx.render(ctx.file("docs/index.html")))
 //                                        .files(f -> f.dir("dist").indexFiles("index.html"))
                               // delegate all trend/* REST requests to the trend handler
                               // the :type?/:count? path tokens are optional
                               // default path /trends will get a response with the top ten of the
                               // all, hashtag, and user mention trends
-                        .path("trends/:type?/:count?", new TrendHandler(ioController)));
+                        .path(REST_TREND_RESOURCE_PATH_REGEX, new TrendHandler(ioController)));
+//                        .path("trends/:type?/:count?", new TrendHandler(ioController)));
             });
 
         } catch (Exception e) {

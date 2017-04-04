@@ -35,8 +35,9 @@ public class TweetProcessor implements IProcessor<String> {
     @Override
     public Object process(String tweetStr) {
         JsonNode n     = jsonStringToTree(tweetStr);
-        Tweet    tweet = new Tweet(n);
-        return tweet;
+//        Tweet    tweet = new Tweet(n);
+//        return tweet;
+        return jsonToTweet(tweetStr);
     }
 
 
@@ -49,10 +50,20 @@ public class TweetProcessor implements IProcessor<String> {
      * @return a Tweet object containing the data from the JSON string
      */
     public Tweet deserializeTweet(String tweetStr) {
-        JsonNode n = jsonStringToTree(tweetStr);
-        return new Tweet(n);
+//        JsonNode n = jsonStringToTree(tweetStr);
+        return jsonToTweet(tweetStr);
+//        return new Tweet(n);
     }
 
+    private Tweet jsonToTweet(String s) {
+        Tweet tweet = null;
+        try {
+             tweet = objectMapper.readValue(s, Tweet.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return tweet;
+    }
     /**
      * Convert JSON string into a tree containging the parsed data. The tree structure provides a
      * means to easily search through the tree and extract the data we want.
@@ -78,7 +89,7 @@ public class TweetProcessor implements IProcessor<String> {
      */
     public void processTweetText(Tweet tweet) {
         // extract all words from the tweet's text using a regular expression
-        Matcher matcher = Pattern.compile(TWEET_REGEX).matcher(tweet.getText());
+        Matcher matcher = Pattern.compile(TWEET_REGEX).matcher(tweet.text);
 
         String word = "";
 
@@ -127,5 +138,12 @@ public class TweetProcessor implements IProcessor<String> {
      */
     public WordNode[] getUsers() {
         return graph.getUsers();
+    }
+
+    /**
+     * Reset all data.
+     */
+    public void resetData() {
+        graph.resetData();        //= new WordGraph();
     }
 }

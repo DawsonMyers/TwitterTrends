@@ -9,6 +9,7 @@ se2xb3.data.models
 se2xb3.data.processing
 se2xb3.injection
 se2xb3.io
+se2xb3.io.files
 se2xb3.io.source
 se2xb3.io.web
 se2xb3.io.web.handlers

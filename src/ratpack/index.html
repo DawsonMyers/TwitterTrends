@@ -6,8 +6,8 @@
   <base href="/">
 
   <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
 
@@ -21,7 +21,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!--Google font -->
     <link href="https://fonts.googleapis.com/css?family=Maven+Pro|Open+Sans" rel="stylesheet">
-<link href="styles.96ce3c2372631601ccb8.bundle.css" rel="stylesheet"/></head>
+<link href="styles.2b4717c3ef90758b3531.bundle.css" rel="stylesheet"/></head>
 
 <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">-->
 <!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>-->
@@ -34,9 +34,12 @@
 <body data-spy="scroll" data-target=".navbar" data-offset="60">
 
 <script>
-    $('#navbar').scrollspy({
-        offset: 50
-    });
+//    $('#navbar').scrollspy({
+//        offset: 50
+//    });
+var shiftWindow = function() { scrollBy(0, -50) };
+window.addEventListener("hashchange", shiftWindow);
+function load() { if (window.location.hash) shiftWindow(); }
 </script>
 <script>
     var offset = 50;
@@ -51,5 +54,5 @@
 <!-- Enable bootstrap 4 theme -->
 <script>window.__theme = 'bs4';</script>
 <app-root>Loading...</app-root>
-<script type="text/javascript" src="inline.7bfb86c63ea5e176a330.bundle.js"></script><script type="text/javascript" src="polyfills.b445e9fc396ea1784811.bundle.js"></script><script type="text/javascript" src="vendor.206d5f8d638bc44af135.bundle.js"></script><script type="text/javascript" src="main.daacf192615b0682b6fb.bundle.js"></script></body>
+<script type="text/javascript" src="inline.afb244f5b36aa451df49.bundle.js"></script><script type="text/javascript" src="polyfills.b445e9fc396ea1784811.bundle.js"></script><script type="text/javascript" src="vendor.206d5f8d638bc44af135.bundle.js"></script><script type="text/javascript" src="main.35d0c09056574548af5c.bundle.js"></script></body>
 </html>

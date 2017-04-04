@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
+import static java.lang.Math.abs;
+
 /**
  * Controls all subsystems that involve input/output operations with external resources.
  * <br><br>
@@ -99,6 +101,7 @@ public class IOController extends Controller {
      * @return list of trends
      */
     public List<Map<String, Integer>> getTrends(int count) {
+        count =   abs(count);
         return AppController.getDataController().getTrends(count);
     }
 
@@ -109,6 +112,7 @@ public class IOController extends Controller {
      * @return a map containing the top trending items
      */
     public Map<String, Integer> getTrendingWords(int count) {
+        count =   abs(count);
         return AppController.getDataController().getTrendingWords(count);
     }
 
@@ -119,6 +123,7 @@ public class IOController extends Controller {
      * @return a map containing the top trending items
      */
     public Map<String, Integer> getTrendingHashtags(int count) {
+        count =   abs(count);
         return AppController.getDataController().getTrendingHashtags(count);
     }
 
@@ -129,6 +134,8 @@ public class IOController extends Controller {
      * @return a map containing the top trending items
      */
     public Map<String, Integer> getTrendingUsers(int count) {
+        count =   abs(count);
         return AppController.getDataController().getTrendingUsers(count);
     }
+
 }

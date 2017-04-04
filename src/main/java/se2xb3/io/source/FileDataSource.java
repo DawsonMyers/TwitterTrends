@@ -1,12 +1,14 @@
 package se2xb3.io.source;
 
+import org.slf4j.Logger;
 import se2xb3.config.Constants;
+import se2xb3.control.AppController;
 import se2xb3.io.IOController;
+import se2xb3.io.files.FileFinder;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+
+import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * A class that extends the abstract class DataSource that is used to read
@@ -17,7 +19,8 @@ import java.io.IOException;
  * @since 3/10/2017
  */
 public class FileDataSource extends DataSource implements Constants {
-
+    private static final String _CLASS_NAME = FileDataSource.class.getSimpleName();
+    private final static Logger log  = getLogger(_CLASS_NAME);
     /**
      * Constructor that takes an IOController instance.
      *
@@ -43,27 +46,54 @@ public class FileDataSource extends DataSource implements Constants {
      * encoded tweet. The strings are added to the queue as they are read.
      */
     public void readData() {
+        log.info("Beginning to read from file");
+        File file = new File(INPUT_FILE);
 
-        try (BufferedReader br = new BufferedReader(new FileReader(url))) {
-            String line = "";
+        String filePath = "";
 
-//            int count = 0;
+        // check is INPUT_FILE exists, if not, try to find it using INPUT_FILE_NAME
+        if (!file.exists()) {
+            log.info("INPUT_FILE " + INPUT_FILE + " not found. Beginning recursive search for it");
+            filePath = FileFinder.findFileByName(INPUT_FILE_NAME, "txt");
+        }
 
-            // read all lines in file and insert them into the queue
-            while ((line = br.readLine()) != null) {
+        // if length is greater than 1, a file was found
+        if (filePath.length() > 0) {
+            log.info("Input file " + INPUT_FILE_NAME + " found at path " +  filePath);
+            url = filePath;
+        }
 
+        while (true) {
+            try (BufferedReader br = new BufferedReader(new FileReader(url))) {
+                String line = "";
+                log.info("Beginning to read from file");
+                int count = 0;
+
+                // read all lines in file and insert them into the queue
+                while ((line = br.readLine()) != null) {
+                    count++;
+                    // simulate stream
+                    try {
+                        Thread.sleep(150);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 //                queue.enqueue("Msg "+count++);
-                queue.enqueue(line);
+                    queue.enqueue(line);
+                }
+
+//                reset data and read it back in again
+                AppController.getDataController().resetData();
+
+//            println("Finished reading file");
+                log.info("Finished reading file. Read " + count + " lines of data");
+                //if(TestDataSource.testing) TestDataSource.endTest();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            println("Finished reading file");
-
-            //if(TestDataSource.testing) TestDataSource.endTest();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
     }

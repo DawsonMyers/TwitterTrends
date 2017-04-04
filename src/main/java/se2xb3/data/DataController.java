@@ -101,4 +101,8 @@ public class DataController extends Controller {
 
     }
 
+    public void resetData(){
+        dataHandler.resetData();
+    }
+
 }

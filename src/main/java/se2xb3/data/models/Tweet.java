@@ -1,13 +1,31 @@
 package se2xb3.data.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import java.util.Map;
 
 /**
  * @author Dawson
  * @version 1.0
  * @since 2/23/2017
  */
-public class Tweet {
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+public class Tweet{ // TweetSimple
+    public Map<String, String> user;
+//    public String               created_at;
+
+    // NOT A NORMAL PROPERTY
+    public String user_name;
+
+    //    public long                 id;
+    public String id_str, text;
+}
+class TweetOld {
 
     // value to fill field with if null is returned instead of a string
     static final String IF_NULL_STR = "none";
@@ -17,27 +35,28 @@ public class Tweet {
     public String created_at;
     public long id;
     public String id_str, text;
-    public int[] display_text_range;
+//    public int[] display_text_range;
     public String source;
-    public boolean truncated;
+//    public boolean truncated;
     public long in_reply_to_status_id, in_reply_to_user_id;
     public String in_reply_to_status_id_str, in_reply_to_user_id_str, in_reply_to_screen_name;
     public User user;
     public String geo, coordinates;
     public Place place;
 
-    public String contributors, quoted_status_id_str, filter_level, timestamp_ms, lang;
+//    public String contributors, quoted_status_id_str, filter_level, timestamp_ms, lang;
+    public String timestamp_ms, lang;
     public long quoted_status_id;
 
-    public boolean is_quote_status, favorited, retweeted, possibly_sensitive;
+//    public boolean is_quote_status, favorited, retweeted, possibly_sensitive;
     public Tweet quoted_status;
     public int retweet_count, favorite_count;
     //public Entities entities;
 
     private JsonNode node;
-    public Tweet() {}
+    public TweetOld() {}
 
-    public Tweet(JsonNode n) {
+    public TweetOld(JsonNode n) {
         node = n;
         created_at = n.findValue("created_at").asText(IF_NULL_STR);
         id = n.findValue("id").asLong(IF_NULL_LONG);
@@ -64,7 +83,7 @@ public class Tweet {
 
         user = new User(n.findValue("user"));
         if (n.findValue("quoted_status") != null) {
-        quoted_status = new Tweet(n.findValue("quoted_status"));
+//        quoted_status = new Tweet(n.findValue("quoted_status"));
         }
 
         if (n.findValue("place") != null) {

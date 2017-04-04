@@ -35,7 +35,6 @@ public class DataHandler implements Constants {
     // comparator to sort maps by value
     private Comparator<Map.Entry<String, Integer>> byValue      =
             (entry1, entry2) -> entry1.getValue().compareTo(entry2.getValue());
-    private int                                    defaultCount = 10;
 
     /**
      * Constructor
@@ -55,7 +54,10 @@ public class DataHandler implements Constants {
      */
     public void processTweet(String tweetStr) {
         Tweet tweet = tweetProcessor.deserializeTweet(tweetStr);
-        tweetsList.add(tweet);
+
+        // the simulator never cleared this list as it loaded tweets into the system, causing the
+        // memory to run out and cause the program to crash
+        //tweetsList.add(tweet);
         tweetProcessor.processTweetText(tweet);
     }
 
@@ -65,7 +67,7 @@ public class DataHandler implements Constants {
      * @return list containing the maps of the most popular word, hashtags, and user mentions.
      */
     public List<Map<String, Integer>> getTrends() {
-        return getTrends(defaultCount);
+        return getTrends(DEFAULT_REST_RESP_COUNT);
     }
 
     /**
@@ -152,4 +154,8 @@ public class DataHandler implements Constants {
         System.out.print(s);
     }
 
+    public void resetData() {
+        tweetProcessor.resetData();
+        tweetsList.clear();
+    }
 }

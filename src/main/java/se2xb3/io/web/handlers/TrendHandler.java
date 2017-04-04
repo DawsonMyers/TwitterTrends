@@ -1,22 +1,27 @@
 package se2xb3.io.web.handlers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
+import se2xb3.config.Constants;
 import se2xb3.io.IOController;
 
+import static java.lang.Math.abs;
 import static se2xb3.io.web.JsonParser.toJson;
 
 /**
- * Handle all rest request received by the web server with a prefix of <code>trends/</code>
+ * Handle all REST request received by the web server with a prefix of <code>trends/</code>.
  *
  * @author Dawson Myers
  * @version 1.0
  * @since 3/27/2017
  */
-public class TrendHandler implements Handler {
-
+public class TrendHandler implements Handler, Constants{
+    private static final String _CLASS_NAME  = TrendHandler.class.getSimpleName();
+    private final static Logger log          = LoggerFactory.getLogger(_CLASS_NAME);
+    private              long   requestCount = 0;
     private IOController ioController;
-    private int defaultCount = 10;
 
     public TrendHandler(IOController ioController) {this.ioController = ioController;}
 
@@ -51,39 +56,55 @@ public class TrendHandler implements Handler {
         String type  = ctx.getPathTokens().get("type");
         String count = ctx.getPathTokens().get("count");
 
-        // path = trends/#
-        if (isNumber(type)) {
+        // print out the request count every 100 request
+        requestCount++;
+        if (requestCount % 100 == 0) {
+            log.info("Trend request count = " + requestCount);
+        }
+
+        if(count != null && count.length() > 3) count = count.substring(0, 2);
+        // trends/ or count is too long
+        if (type == null || type.length() == 0){
+//            if(type.length() > MAX_REST_RESP_COUNT)
+//                ctx.render(toJson(ioController.getTrends(MAX_REST_RESP_COUNT)));
+//            else
+                ctx.render(toJson(ioController.getTrends(DEFAULT_REST_RESP_COUNT)));
+            return;
+            // path = trends/#
+        }  else if (isNumber(type)) {
             ctx.render(toJson(ioController.getTrends(Integer.parseInt(type))));
             return;
-            // trends/
-        }  else if (type == null || type.length() == 0){
-            ctx.render(toJson(ioController.getTrends(defaultCount)));
-            return;
-        }else if (type.toLowerCase().equals("all")) {
+        }else if (type.toLowerCase().equals(REST_RESOURCE_TRENDS_ALL)) {
+//        }else if (type.toLowerCase().equals("all")) {
             if (isNumber(count)) {
-                ctx.render(toJson(ioController.getTrends(Integer.parseInt(count))));
+                ctx.render(toJson(ioController.getTrendingWords(Integer.parseInt(count))));
                 return;
             }
-            ctx.render(toJson(ioController.getTrends(defaultCount)));
+            ctx.render(toJson(ioController.getTrendingWords(DEFAULT_REST_RESP_COUNT)));
             return;
             // trends/hashtags/#
-        } else if (type.toLowerCase().equals("hashtags")) {
+        } else if (type.toLowerCase().equals(REST_RESOURCE_TRENDS_HASHTAGS)) {
             if (isNumber(count)) {
                 ctx.render(toJson(ioController.getTrendingHashtags(Integer.parseInt(count))));
                 return;
             }
-            ctx.render(toJson(ioController.getTrendingHashtags(defaultCount)));
+            ctx.render(toJson(ioController.getTrendingHashtags(DEFAULT_REST_RESP_COUNT)));
             return;
             // trends/users/#
-        } else if (type.toLowerCase().equals("users")) {
+        } else if (type.toLowerCase().equals(REST_RESOURCE_TRENDS_USERS)) {
             if (isNumber(count)) {
                 ctx.render(toJson(ioController.getTrendingUsers(Integer.parseInt(count))));
                 return;
             }
-            ctx.render(toJson(ioController.getTrendingUsers(defaultCount)));
+            ctx.render(toJson(ioController.getTrendingUsers(DEFAULT_REST_RESP_COUNT)));
             return;
         }
-        ctx.render("no match");
+        ctx.render(REST_REQUEST_NO_MATCH);
+//        ctx.render("no match");
+    }
+
+    private int parseInt(String s) {
+        return abs(Integer.parseInt(s));
     }
 
     /**
@@ -100,12 +121,8 @@ public class TrendHandler implements Handler {
      * @return JSON encoded string containing the trends
      */
     public String getTrends() {
-//        return JsonParser.toJson(
-//                toContainerObject(ioController.getTrends()));
         return toJson(ioController.getTrends());
     }
-
-
 
     /**
      * Get trends from data controller.
@@ -129,7 +146,7 @@ public class TrendHandler implements Handler {
         if(count != null && count != ""){
             return toJson(ioController.getTrendingWords(Integer.parseInt(count)));
         }
-        return toJson(ioController.getTrendingWords(defaultCount));
+        return toJson(ioController.getTrendingWords(DEFAULT_REST_RESP_COUNT));
     }
 
     /**
@@ -141,7 +158,7 @@ public class TrendHandler implements Handler {
         if(count != null && count != ""){
             return toJson(ioController.getTrendingHashtags(Integer.parseInt(count)));
         }
-        return toJson(ioController.getTrendingHashtags(defaultCount));
+        return toJson(ioController.getTrendingHashtags(DEFAULT_REST_RESP_COUNT));
     }
 
     /**
@@ -153,7 +170,7 @@ public class TrendHandler implements Handler {
         if(count != null && count != ""){
             return toJson(ioController.getTrendingUsers(Integer.parseInt(count)));
         }
-        return toJson(ioController.getTrendingUsers(defaultCount));
+        return toJson(ioController.getTrendingUsers(DEFAULT_REST_RESP_COUNT));
     }
 
 }
