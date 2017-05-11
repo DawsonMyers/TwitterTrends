@@ -46,7 +46,7 @@ public class FileDataSource extends DataSource implements Constants {
      * encoded tweet. The strings are added to the queue as they are read.
      */
     public void readData() {
-        log.info("Beginning to read from file");
+        //log.info("Beginning to read from file");
         File file = new File(INPUT_FILE);
 
         String filePath = "";
@@ -71,10 +71,10 @@ public class FileDataSource extends DataSource implements Constants {
 
                 // read all lines in file and insert them into the queue
                 while ((line = br.readLine()) != null) {
-                    count++;
+                    //count++;
                     // simulate stream
                     try {
-                        Thread.sleep(150);
+                        Thread.sleep(DATA_SOURCE_STREAM_RATE);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
